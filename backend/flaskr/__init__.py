@@ -1,6 +1,7 @@
 import json
 import os
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 from lib.prediction import do_prediction
 from lib.generate_model import do_generate_model
 
@@ -27,6 +28,7 @@ from lib.generate_model import do_generate_model
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app, origins=["http://localhost:5174/"])
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -55,6 +57,7 @@ def create_app(test_config=None):
       
     # endpoint untuk prediksi data
     @app.route('/api/prediction', methods=['POST'])
+    @cross_origin(origin='localhost', headers=['Content-Type','application/json'])
     def handlePrediction():
       # Mendapatkan data JSON dari request body
       data = request.get_json()
@@ -82,6 +85,8 @@ def create_app(test_config=None):
     def getDataset():
         with open('data/dataset_with_clusters.json', 'r') as f:
             dataset_json = json.load(f)
-        return jsonify(dataset_json)
+        response = jsonify(dataset_json)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
     return app
