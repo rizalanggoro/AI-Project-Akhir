@@ -29,6 +29,7 @@ import {
   TableHeader,
   TableRow,
 } from "./components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { apiBaseUrl } from "./lib/const";
 import { Data } from "./lib/models";
 import { cn } from "./lib/utils";
@@ -208,6 +209,32 @@ export default function App() {
                 </AlertDescription>
               </Alert>
             )}
+          </CardFooter>
+        </Card>
+
+        <Card className="mt-4">
+          <CardHeader>
+            <CardTitle className="text-lg">Plot</CardTitle>
+            <CardDescription>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Repudiandae in illum numquam saepe corporis impedit hic. Impedit
+              provident natus sint dolorum nobis dicta odit, esse sapiente culpa
+              quaerat ipsa necessitatibus.
+            </CardDescription>
+          </CardHeader>
+          <CardFooter>
+            <Tabs defaultValue="before">
+              <TabsList>
+                <TabsTrigger value="before">Sebelum Clustering</TabsTrigger>
+                <TabsTrigger value="after">Sesudah Clustering</TabsTrigger>
+              </TabsList>
+              <TabsContent value="before" className="mt-4">
+                <img src={apiBaseUrl + "image/before-clustering"} />
+              </TabsContent>
+              <TabsContent value="after" className="mt-4">
+                <img src={apiBaseUrl + "image/after-clustering"} />
+              </TabsContent>
+            </Tabs>
           </CardFooter>
         </Card>
 

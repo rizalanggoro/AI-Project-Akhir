@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_sc
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 from matplotlib import pyplot as plt
-# import seaborn as sns
+import seaborn as sns
 import joblib
 
 # scroll mentok ke bawah, ada tutor penting!!!
@@ -20,6 +20,9 @@ def do_generate_model():
   x_scaled = scaler.fit_transform(x)
   joblib.dump(scaler, 'data/scaler.pkl')
   
+  sns.pairplot(dataset[features])
+  plt.savefig('data/images/before_clustering.png')
+  
   find_optimal_clusters(x_scaled)
   
   n_clusters = 3 # menyesuaikan dengan hasil Elbow Method
@@ -28,6 +31,8 @@ def do_generate_model():
   clusters = kmeans.labels_
   
   dataset['cluster'] = clusters
+  sns.pairplot(dataset[features + ['cluster']], hue='cluster', palette='Set1')
+  plt.savefig('data/images/after_clustering.png')
   
   for cluster_id in range(n_clusters):
     cluster_data = dataset[dataset['cluster'] == cluster_id]

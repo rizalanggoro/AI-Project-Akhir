@@ -1,6 +1,6 @@
 import json
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS, cross_origin
 from lib.prediction import do_prediction
 from lib.generate_model import do_generate_model
@@ -88,5 +88,13 @@ def create_app(test_config=None):
         response = jsonify(dataset_json)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
+    
+    @app.route('/api/image/after-clustering', methods=['GET'])
+    def getAfterClusteringPlot():
+        return send_file('../data/images/after_clustering.png', mimetype='image/png')
+    
+    @app.route('/api/image/before-clustering', methods=['GET'])
+    def getBeforeClusteringPlot():
+        return send_file('../data/images/before_clustering.png', mimetype='image/png')
 
     return app
