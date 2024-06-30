@@ -89,10 +89,10 @@ export default function App() {
   return (
     <>
       <NavbarComponent />
-      <div className="pt-24 pb-8 max-w-5xl mx-auto">
+      <div className="max-w-5xl pt-24 pb-8 mx-auto">
         <div className="space-y-2">
           <p className="text-2xl font-bold">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
               Penerapan Clustering K-Means dan KNN
             </span>{" "}
             dalam Prediksi Tingkat Kerentanan Harian Penyebaran Penyakit DBD di
@@ -115,7 +115,7 @@ export default function App() {
             </CardDescription>
           </CardHeader>
 
-          <div className="px-6 grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 px-6">
             <div className="space-y-1">
               <Label>Masukkan jumlah kasus DBD</Label>
               <Input
@@ -200,14 +200,21 @@ export default function App() {
 
             {predictionData.result && (
               <Alert>
-                <AudioWaveform className="h-4 w-4" />
-                <AlertTitle>Berhasil!</AlertTitle>
-                <AlertDescription>
-                  Hasil prediksi tingkat kerentanan terhadap penyakit DBD
-                  terhadap beberapa parameter yang Anda masukkan adalah{" "}
-                  <span className="font-medium">{predictionData.result}</span>
-                </AlertDescription>
-              </Alert>
+              <AudioWaveform className="w-4 h-4" />
+              <AlertTitle>Berhasil!</AlertTitle>
+              <AlertDescription>
+                Hasil prediksi tingkat kerentanan terhadap penyakit DBD terhadap beberapa parameter yang Anda masukkan adalah{" "}
+                <Badge
+                  className={cn(
+                    predictionData.result === "High Risk DBD" && "font-medium text-sm bg-red-100 text-red-500 hover:bg-red-100",
+                    predictionData.result === "Medium Risk DBD" && "font-medium text-sm bg-amber-100 text-amber-500 hover:bg-amber-100",
+                    predictionData.result === "Low Risk DBD" && "font-medium text-sm bg-green-100 text-green-500 hover:bg-green-100"
+                  )}
+                >
+                  {predictionData.result}
+                </Badge>
+              </AlertDescription>
+            </Alert>
             )}
           </CardFooter>
         </Card>
@@ -216,10 +223,7 @@ export default function App() {
           <CardHeader>
             <CardTitle className="text-lg">Plot</CardTitle>
             <CardDescription>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Repudiandae in illum numquam saepe corporis impedit hic. Impedit
-              provident natus sint dolorum nobis dicta odit, esse sapiente culpa
-              quaerat ipsa necessitatibus.
+              Berikut plot data harian sebelum dan sesudah dilakukan clustering
             </CardDescription>
           </CardHeader>
           <CardFooter>
@@ -242,14 +246,11 @@ export default function App() {
           <CardHeader>
             <CardTitle className="text-lg">Data</CardTitle>
             <CardDescription>
-              Berikut data harian setelah dilakukan clustering Lorem ipsum dolor
-              sit amet consectetur adipisicing elit. Eligendi ea saepe
-              necessitatibus aspernatur odit sint corporis. Fuga voluptates nemo
-              natus necessitatibus nobis cumque libero vero nostrum molestias.
-              Dolorum, magnam nobis.
+              Berikut data harian setelah dilakukan clustering, maka data tersebut 
+              akan digunakan untuk memprediksi tingkat kerentanan harian penyebaran penyakit DBD
             </CardDescription>
           </CardHeader>
-          <CardFooter className="flex flex-col gap-4 items-start">
+          <CardFooter className="flex flex-col items-start gap-4">
             <Select
               defaultValue={filterData}
               onValueChange={(e) => setFilterData(e)}
@@ -265,7 +266,7 @@ export default function App() {
               </SelectContent>
             </Select>
 
-            <div className="border rounded-md overflow-hidden w-full">
+            <div className="w-full overflow-hidden border rounded-md">
               <Table>
                 <TableHeader className="bg-muted/70">
                   <TableRow>
@@ -312,11 +313,11 @@ export default function App() {
                           <Badge
                             className={cn(
                               item.cluster === 2 &&
-                                "bg-red-500 hover:bg-red-500",
+                                "text-sm bg-red-100 text-red-500 hover:bg-red-100",
                               item.cluster === 1 &&
-                                "bg-green-500 hover:bg-green-500",
+                                "text-sm bg-green-100 text-green-500 hover:bg-green-100",
                               item.cluster === 0 &&
-                                "bg-amber-500 hover:bg-amber-500"
+                                "text-sm bg-amber-100 text-amber-500 hover:bg-amber-100"
                             )}
                           >
                             {["Medium", "Low", "High"][item.cluster]}
