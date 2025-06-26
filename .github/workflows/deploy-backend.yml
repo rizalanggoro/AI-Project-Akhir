@@ -17,6 +17,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          context: ./backend
           file: ./backend
           push: true
           tags: rizalanggoro/backend-prediksi-kerentanan-dbd:latest
