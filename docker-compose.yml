@@ -1,0 +1,7 @@
+services:
+  frontend:
+    image: ai-frontend:latest
+    ports:
+      - "3006:80"
+  backend:
+    image: ai-backend:latest
