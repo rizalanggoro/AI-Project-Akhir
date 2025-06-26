@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - "frontend/**"
+      - ".github/workflows/deployment-frontend.yml"
 jobs:
   docker:
     runs-on: ubuntu-latest
